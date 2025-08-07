@@ -7,8 +7,10 @@ class ApiHelper {
     var uri = Uri.parse(url);
     http.Response res = await http.get(uri);
 
+    print(res.statusCode);
     if (res.statusCode == 200) {
       var mData = jsonDecode(res.body);
+      print(mData);
       return mData;
     }else {
       return null;

@@ -15,8 +15,8 @@ class _DashboardPageState extends State<DashboardPage> {
 
   List<Widget> navePages = [
     HomePage(),
+    ExplorePage(),
     SettingsPage(),
-    ExplorePage()
   ];
   @override
   Widget build(BuildContext context) {

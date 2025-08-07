@@ -69,6 +69,7 @@ class SourceModel {
 
   // FROM JSON
   factory SourceModel.fromJson(Map<String, dynamic> json) {
-    return SourceModel(id: json['id'], name: json['name']);
+    return SourceModel(id: json['id'].toString(),
+        name: json['name']);
   }
 }

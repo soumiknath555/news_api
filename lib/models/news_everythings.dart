@@ -1,12 +1,15 @@
 class SourceModels {
-  int? id;
+  String? id;
   String? name;
 
   SourceModels({required this.id, required this.name});
 
   // FROM JSON
   factory SourceModels.fromJson(Map<String, dynamic> json) {
-    return SourceModels(id: json['id'], name: json['name']);
+    return SourceModels(
+        id: json['id']?.toString(),
+        name: json['name']
+    );
   }
 }
 
@@ -34,7 +37,7 @@ class ArticaleModels {
   // FROM JSON
   factory ArticaleModels.fromJson(Map<String, dynamic> json) {
     return ArticaleModels(
-      source: json['source'],
+      source: SourceModels.fromJson(json['source']),
       author: json['author'],
       content: json['content'],
       description: json['description'],
@@ -49,7 +52,7 @@ class ArticaleModels {
 class NewsEverythings {
   List<ArticaleModels>? articles;
   String? status;
-  String? totalResults;
+  num? totalResults;
 
   NewsEverythings({
     required this.articles,
@@ -66,7 +69,7 @@ class NewsEverythings {
     }
 
     return NewsEverythings(
-      articles: json['articles'],
+      articles: articlesList,
       status: json['status'],
       totalResults: json['totalResults'],
     );
