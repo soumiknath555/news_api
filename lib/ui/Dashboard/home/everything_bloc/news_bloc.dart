@@ -11,14 +11,17 @@ class NewsBloc extends Bloc<NewsEvent , NewsState>{
   ApiHelper apiHelper ;
 
   NewsBloc({ required this.apiHelper}) : super(NewsInitialState()) {
-    on<getNewsEvent>((event , emit) async {
+
+    // Headlines
+
+    on<FetchHeadlinesEvent>((event , emit) async {
       emit(NewsLoadingState());
-      var resJson =await apiHelper.getApi(url: Urls.newsEverything);
+      var resJson =await apiHelper.getApi(url: Urls.newsHeadlines);
 
       if(resJson!= null) {
-        var mResData = NewsEverythings.fromJson(resJson);
-        print("✅ News parsed: ${mResData.articles?.length} items");
-        emit(NewsLoadedState(resNewsEvery: mResData));
+        var mResData = NewsResponse.fromJson(resJson);
+        // print("✅ News parsed: ${mResData.articles?.length} items");
+        emit(NewsLoadedState(news: mResData));
       }else {
         emit(NewsErrorState(errorMsg: "errorMsg , I don't know"));
       }
@@ -26,16 +29,35 @@ class NewsBloc extends Bloc<NewsEvent , NewsState>{
     });
 
 
-  /*  on<getNewsEvent>(event, emit) async{
-      emit(NewsLoadingState());
+    // Everything
 
+    on<FetchEverythingEvent>((event , emit) async{
+
+      emit(NewsLoadingState());
       var resJson = await apiHelper.getApi(url: Urls.newsEverything);
-      if (resJson! = null){
-        var mResData = NewsEverythings.fromJson(resJson);
-        emit (NewsLoadedState(resNewsEvery: mResData));
-      }else{
-        emit(NewsErrorState(errorMsg: "errorMsg , I don't know"));
+
+      if(resJson!= null) {
+        var resData = NewsResponse.fromJson(resJson);
+      } else {
+        emit(NewsErrorState(errorMsg: "Filled to load Everything !!"));
       }
-    }*/
+    });
+
+    // Search
+    on<SearchNewsEvent>((event , emit)async{
+      emit(NewsLoadingState());
+      var resJson =await apiHelper.getApi(url: Urls.newsEverything);
+
+      if(resJson!= null){
+        var resData = NewsResponse.fromJson(resJson);
+        emit(NewsLoadedState(news: resData));
+      }else {
+        emit(NewsErrorState(errorMsg: "No result found !! for ${event.query}"));
+      }
+    });
+
+
+
+
   }
 }

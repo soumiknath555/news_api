@@ -1,3 +1,4 @@
+/*
 class NewsHeadline {
   List<ArticleModels>? articles;
   String? status;
@@ -73,3 +74,4 @@ class SourceModel {
         name: json['name']);
   }
 }
+*/

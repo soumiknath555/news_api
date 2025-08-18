@@ -51,7 +51,7 @@ InputDecoration mInputDecoration({
   String hintText = '',
   String lableText = "",
   IconData pexfixIcon = Icons.person,
-  String? name
+  String? name,
 
 }) => InputDecoration(
  fillColor: fillColor  ?? Colors.white,

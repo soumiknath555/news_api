@@ -49,26 +49,26 @@ class ArticaleModels {
   }
 }
 
-class NewsEverythings {
+class NewsResponse {
   List<ArticaleModels>? articles;
   String? status;
   num? totalResults;
 
-  NewsEverythings({
+  NewsResponse({
     required this.articles,
     required this.status,
     required this.totalResults,
   });
 
   // FROM JSON
-  factory NewsEverythings.fromJson(Map<String, dynamic> json) {
+  factory NewsResponse.fromJson(Map<String, dynamic> json) {
 
     List<ArticaleModels> articlesList = [];
     for (Map<String , dynamic> eachArticales in json["articles"]) {
       articlesList.add(ArticaleModels.fromJson(eachArticales));
     }
 
-    return NewsEverythings(
+    return NewsResponse(
       articles: articlesList,
       status: json['status'],
       totalResults: json['totalResults'],

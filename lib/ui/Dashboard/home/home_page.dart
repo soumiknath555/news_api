@@ -13,19 +13,34 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  TextEditingController searchController = TextEditingController();
+
+  final List<String> categories = [
+    "All",
+    "Business",
+    "Entertainment",
+    "General",
+    "Health",
+    "Science",
+    "Sports",
+    "Technology"
+  ];
+
+  String selectedCategory = "All";
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     // BlocProvider.of<NewsBloc>(context).add(getNewsEvent());
-    context.read<NewsBloc>().add(getNewsEvent());
+    context.read<NewsBloc>().add(FetchHeadlinesEvent());
   }
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar( automaticallyImplyLeading: false,),
+      appBar: AppBar(title: Text("News App"),centerTitle: true, automaticallyImplyLeading: false,),
 
       body:Container(
         width: double.infinity,
@@ -35,11 +50,16 @@ class _HomePageState extends State<HomePage> {
             children: [
 
               TextField(
+                controller: searchController,
                 decoration: mInputDecoration(
                   pexfixIcon: Icons.search,
-                 // hintText: "Let's see what happend today",
-                  lableText: "Let's see what happend today",
+                  hintText: "Let's see what happend today",
                 ),
+                onSubmitted: (value){
+                  /*if(value.isNotEmpty){
+                    context.read<NewsBloc>().add(SearchNewsEvent(query: value));
+                  }*/
+                },
               ) ,
               SizedBox(height: 20,),
               Row(
@@ -61,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                       return Center(child: Text('${state.errorMsg}'),);
                     }
                     if(state is NewsLoadedState) {
-                      var mDataModel = state.resNewsEvery;
+                      var mDataModel = state.news;
                       return ListView.builder(
                         scrollDirection: Axis.horizontal,
                           itemCount: mDataModel.articles?.length ?? 0,

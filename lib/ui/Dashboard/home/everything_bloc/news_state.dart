@@ -5,8 +5,8 @@ abstract class NewsState {}
 class NewsInitialState extends NewsState {}
 class NewsLoadingState extends NewsState {}
 class NewsLoadedState extends NewsState {
-  NewsEverythings resNewsEvery ;
-  NewsLoadedState({ required this.resNewsEvery});
+  NewsResponse news ;
+  NewsLoadedState({ required this.news});
 }
 class NewsErrorState extends NewsState {
   String errorMsg ;
